@@ -1,4 +1,4 @@
-#collegecoding.com 
+#collegecoding.com
 
 -Class:  Javascript for Undergrads [DISCUSSION DRAFT]
 -Course Number: 99999999999
