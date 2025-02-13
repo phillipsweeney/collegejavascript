@@ -1,10 +1,15 @@
 # collegecoding.com
 
 -Class:  Javascript for Undergrads [DISCUSSION DRAFT]
+
 -Course Number: 99999999999
+
 -Schedule: Summer 2025[Detailed Syllabus, Reading, Assignments - COMING SOON]
+
 -Prerequisites:  Coursera: [xxxx] Programming Foundations with JavaScript, HTML and CSS (Duke University) [ https://www.coursera.org/learn/duke-programming-web ]
+
 -Text Book: Eloquent JavaScript A Modern Introduction to Programming - by Marijn Haverbeke - ISBN-10: 1-59327-950-7 - Full Book:  https://www.kea.nu/files/textbooks/humblelearn2code/eloquentjavascript3rdedition.pdf (Free Download)
+
 -Coursera Course:  [Google, AWS, MSFT will provide.]
 -Course Website/GitHub Repo: collegecoding.com https://github.com/phillipsweeney/collegejavascript
 -Description:  This course will be an introduction to Coding using Javascript for Undergraduate Students.  This course may be the most important course you ever take.  The goal of this course is to teach quickly how to manipulate data using Javascript at the college level for many data bound use cases...  The course will have reference and assistance for building your own custom data driven applications.  At the end of the course you will be a PSU & Google Certified full-stack developer. The course will thoroughly teach setup, basic GUI design, Server side API development, JSON data manipulation, File Persistence, basic data engineering using Javascript and SQL.  The course uses standard 2-tier, full-stack development environment from the first lesson, and assumes basic prerequisite setup of the dev environment and access to the internet.  It Also assumes basic understanding of javascript, html and css.
