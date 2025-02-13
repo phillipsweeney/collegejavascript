@@ -1,34 +1,3 @@
-#College Javascript
-
-1 Semester - Plymouth State University - Google Certified Full Stack, Data Engineering - Summer 2025
-Text:
-
-Eloquent JavaScript A Modern Introduction to Programming - by Marijn Haverbeke - ISBN-10: 1-59327-950-7 - Full Book:  https://www.kea.nu/files/textbooks/humblelearn2code/eloquentjavascript3rdedition.pdf (Free Download)
-
-
-
-
-[Eloquent JavaScript, Marijn Haverbeke - ISBN-10: 1-59327-950-7 - Full Book   ](https://www.kea.nu/files/textbooks/humblelearn2code/eloquentjavascript3rdedition.pdf)
-
-Prerequisite/Setup:
-
-Basic JavaScript Experience.(Course xxxxx)
-Node Js v22+ installed 
-VSCode Editor Installed.
-
-Course Goals:
-PM Level Use Case Creation 
-Intermediate level coding: data design, ERD, DFD, key relationships, sorting/indexing, basic relational/referrential design, 
-Gui Design for Responicve data input and output
-Basic/Intermediate SQL Experience
-Google Cloud GCP and Amazon AWS Hosting experience
-GCP API's
-AWS API's
-Live working data analysis website 
-Templating & Versioning
-
-***
-
 Class:  Javascript for Undergrads [DISCUSSION DRAFT]
 Course Number: 99999999999
 Semester: Summer 2025
@@ -36,26 +5,26 @@ Prerequisites:  Coursera:  Programming Foundations with JavaScript, HTML and CSS
 Text Book: Eloquent JavaScript A Modern Introduction to Programming - by Marijn Haverbeke - ISBN-10: 1-59327-950-7 - Full Book:  https://www.kea.nu/files/textbooks/humblelearn2code/eloquentjavascript3rdedition.pdf (Free Download)
 Coursera Course:  [TBD] [Google, AWS, MSFT]
 Course Website/GitHub Repo: [TBD]
-Description:  This course will be an introduction to Coding using Javascript for Undergraduate Students.  This course may be the most important course you ever take.  The goal of this course is to teach quickly how to manipulate data using Javascript at the college level for many data bound use cases...  The course will have reference and assistance for building your own custom data driven applications.  At the end of teh course you will be a PSU & Google Certified ful-stack developer. Teh course will thouroughly teach setup, basic GUI design, Server side API development, JSON data manipulation, File Persistence, basic data engineering using Javascript and SQL.  The coures uses standard 2-tier, full-stack development environment from the first lesson, and assumes basic prequisite setup of teh dev environment and access to the internet.  Italso assumes basic understanding of javascript, html and css.
-Course Goals: Certified Google "College JavaScript" Certificate.  Each student is required to have a working portfilio of a data application available on the internet that performs CRUD on a private data sources and use of 3rd party data source.  teh student will have confidence adn understanding working with datasets and perfiorming basic data management(CRUD) on the data.  Each student should be able to present a final working software application by the end of teh courser.
+Description:  This course will be an introduction to Coding using Javascript for Undergraduate Students.  This course may be the most important course you ever take.  The goal of this course is to teach quickly how to manipulate data using Javascript at the college level for many data bound use cases...  The course will have reference and assistance for building your own custom data driven applications.  At the end of the course you will be a PSU & Google Certified full-stack developer. The course will thoroughly teach setup, basic GUI design, Server side API development, JSON data manipulation, File Persistence, basic data engineering using Javascript and SQL.  The course uses standard 2-tier, full-stack development environment from the first lesson, and assumes basic prerequisite setup of the dev environment and access to the internet.  It Also assumes basic understanding of javascript, html and css.
+Course Goals: Certified Google "College JavaScript" Certificate.  Each student is required to have a working portfolio of a data application available on the internet that performs CRUD on a private data sources and use of 3rd party data source.  the student will have confidence and understanding working with datasets and performing basic data management(CRUD) on the data.  Each student should be able to present a final working software application by the end of the courser.
 
 
 Setup:  
-
-Insttall Node.js and NPM, add to your path, reboot.
+```
+Install Node.js and NPM, add to your path, reboot.
 install portable vscode, create projects folder, get environment working in vscode.
 install basic node js google cloud app engine project to host your code on the internet.
 get template index.html generated and loaded to google cloud.
 create a github account.
+```
 
 
 
 
 
+Schedule: Summer 2025
 
-Schedule:
-
-Intro/Recap:
+Prerequisite : Coursera [xxxx]
 
 
 JavaScript Fundamentals: Syntax, Variables, Data Types
@@ -70,6 +39,7 @@ Project: Build a Simple Form with Validation
 
 
 Main:
+```
 Introduction to Full-Stack Development
 Setting up a Node.js and Express Backend
 Designing RESTful APIs
@@ -82,8 +52,11 @@ Connecting to Google Data Sources
 Connecting to 3rd Party Data Sources
 Testing and Debugging the Full-Stack Application
 Deployment and Hosting - Google Cloud
+```
+Data Analytics/R: 
 
-Data Analytics/R:
+RScript Calling and return values.
+RSetup, troubleshhoting and escaping
 
 
 Project/Exercises:
@@ -113,17 +86,3 @@ https://www.kea.nu/files/textbooks/humblelearn2code/eloquentjavascript3rdedition
 
 
 
-
-***
-
-Projects:
-
-Hello World
-Master detail Database access - file IO
-Master detail Database Access - database IO
-API Client Access - REST API (YouTube, Films)
-API Client Access - REST API (Instagram)
-API Client Access - REST API (Linked In)
-API Client Access - REST API (YouTube, Music)
-API Client Access - REST API (Blogger)
-API Server Hosting - REST API ([YOUR PROJECT HERE])
