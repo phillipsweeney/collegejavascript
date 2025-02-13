@@ -1,10 +1,10 @@
-#collegecoding.com 
+# collegecoding.com 
 
-##Class:  Javascript for Undergrads [DISCUSSION DRAFT]
-##Course Number: 99999999999
-###Schedule: Summer 2025[Detailed Syllabus, Reading, Assignments - COMING SOON]
-###Prerequisites:  Coursera: [xxxx] Programming Foundations with JavaScript, HTML and CSS (Duke University) [ https://www.coursera.org/learn/duke-programming-web ]
-###Text Book: Eloquent JavaScript A Modern Introduction to Programming - by Marijn Haverbeke - ISBN-10: 1-59327-950-7 - Full Book:  https://www.kea.nu/files/textbooks/humblelearn2code/eloquentjavascript3rdedition.pdf (Free Download)
+## Class:  Javascript for Undergrads [DISCUSSION DRAFT]
+## Course Number: 99999999999
+### Schedule: Summer 2025[Detailed Syllabus, Reading, Assignments - COMING SOON]
+### Prerequisites:  Coursera: [xxxx] Programming Foundations with JavaScript, HTML and CSS (Duke University) [ https://www.coursera.org/learn/duke-programming-web ]
+### Text Book: Eloquent JavaScript A Modern Introduction to Programming - by Marijn Haverbeke - ISBN-10: 1-59327-950-7 - Full Book:  https://www.kea.nu/files/textbooks/humblelearn2code/eloquentjavascript3rdedition.pdf (Free Download)
 
 - Coursera Course:  [Google, AWS, MSFT will provide.]
 
