@@ -1,4 +1,4 @@
-# collegecoding.com 
+# collegejavascript.com - codingforcollege.com
 
 Class:  ** Javascript for Undergrads [DISCUSSION DRAFT] **
 ```
