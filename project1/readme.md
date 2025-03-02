@@ -8,7 +8,10 @@ Project 1 -
 
 - setup - Setup Node.js and VSCode development environment. Your node.js server environment will be used in further defelopment primarily for all secure tasks and file I/O to local file or database..  The simple node.js will be run on a local server machine (windows, macos, linux ubuntu).  Please setup your server environment on a local host.
 
-#[Setup VSCode](project1/project1-setup-Install vscode 1.pdf)
+
+#[Setup VSCode](https://github.com/phillipsweeney/collegejavascript/blob/84232a66a7de26c4be6432515df0993a71f02d84/project1/project1-setup-Install%20nodejs%201.pdf)
+https://github.com/phillipsweeney/collegejavascript/blob/84232a66a7de26c4be6432515df0993a71f02d84/project1/project1-setup-Install%20nodejs%201.pdf
+
 #[Setup Node.js](project1/project1-setup-Install nodejs 1.pdf)
   
 - contacts - Load your first local data set from the local client browser code.  We will load your personal contacts from local html file.  Please make these contacts your own and add 10-20 contacts with eamils and phone numbers.  Customize, add Address City State Zip and Notes fields to each contact.
