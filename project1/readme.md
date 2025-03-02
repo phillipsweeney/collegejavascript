@@ -11,7 +11,7 @@ Project 1 -
 
 #[Setup VSCode](https://github.com/phillipsweeney/collegejavascript/blob/3c819f82d44d57a141cda546a23237ed9f5d3d44/project1/project1-setup-Install%20vscode%201.pdf)
 
-#[Setup Node.js]((https://github.com/phillipsweeney/collegejavascript/blob/84232a66a7de26c4be6432515df0993a71f02d84/project1/project1-setup-Install%20nodejs%201.pdf))
+#[Setup Node.js](https://github.com/phillipsweeney/collegejavascript/blob/84232a66a7de26c4be6432515df0993a71f02d84/project1/project1-setup-Install%20nodejs%201.pdf))
   
 - contacts - Load your first local data set from the local client browser code.  We will load your personal contacts from local html file.  Please make these contacts your own and add 10-20 contacts with eamils and phone numbers.  Customize, add Address City State Zip and Notes fields to each contact.
 
