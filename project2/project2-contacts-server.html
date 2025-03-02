@@ -9,6 +9,25 @@
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
   />
+
+  <style>
+    /* Force the body background dark and text white */
+    body {
+      background-color: #121212;
+      color: #ffffff;
+    }
+    
+    /* Make the table background white, text black */
+    .contacts-table {
+      background-color: #ffffff;
+      color: #000000;
+    }
+    
+    /* Thin rows for compact style */
+    .table-sm tr th, .table-sm tr td {
+      padding: 0.3rem;
+    }
+  </style>
 </head>
 <body class="bg-dark text-white">
   <!-- Navbar will be injected here -->
@@ -19,20 +38,242 @@
     <h1>Hello, World!</h1>
     <p>This is the main content of the page.</p>
   </div>
-
-  <!-- Bootstrap JS + dependencies -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Script to load the navbar partial -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      fetch('navbar1.html')
-        .then(response => response.text())
-        .then(navbarHTML => {
-          document.getElementById('navbar-container').innerHTML = navbarHTML;
-        })
-        .catch(error => console.error('Error loading navbar:', error));
-    });
+  
+  <!-- Environment Variables (example) -->
+  <script type="text/javascript">
+    var ENV = {
+      contactsFile: "data.json" // Not used in this example, but here for demonstration
+    };
   </script>
+
+  <div class="container py-4">
+    <h1 class="mb-4">Contacts</h1> <i>[Select a contact to edit]</i>
+    
+    <!-- Scrollable Table Container -->
+    <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+      <table id="contactsTable" class="table table-sm table-bordered table-hover contacts-table">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Phone 1</th>
+            <th scope="col">Phone 2</th>
+            <th scope="col">Phone 3</th>
+          </tr>
+        </thead>
+        <tbody id="contactsTableBody">
+          <!-- Rows will be inserted here by JavaScript -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Selected contact form will appear here -->
+    <div id="selectedContact" class="mt-4">
+      <!-- Form for the chosen row goes here -->
+    </div>
+  </div>
+
+  <!-- Bootstrap 5.3 JS (for any interactive components) -->
+  <script 
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+  </script>
+
+  <script type="text/javascript">
+    /**
+     * 1) SAMPLE CSV DATA:
+     *    Replace the lines below with your own CSV if you like.
+     *    This example includes 30 sample rows using the standard Gmail format.
+     */
+    var sampleCSVData = 
+"First Name\tMiddle Name\tLast Name\tPhonetic First Name\tPhonetic Middle Name\tPhonetic Last Name\tName Prefix\tName Suffix\tNickname\tFile As\tOrganization Name\tOrganization Title\tOrganization Department\tBirthday\tNotes\tPhoto\tLabels\tE-mail 1 - Label\tE-mail 1 - Value\tPhone 1 - Label\tPhone 1 - Value\tPhone 2 - Label\tPhone 2 - Value\tPhone 3 - Label\tPhone 3 - Value\tAddress 1 - Label\tAddress 1 - Formatted\tAddress 1 - Street\tAddress 1 - City\tAddress 1 - PO Box\tAddress 1 - Region\tAddress 1 - Postal Code\tAddress 1 - Country\tAddress 1 - Extended Address\t\t.\n" +
+"fname1\tmname1\tlname1\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail1@abc.com\tMobile\t(212) 555-1001\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname2\tmname2\tlname2\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail2@abc.com\tMobile\t(212) 555-1002\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname3\tmname3\tlname3\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail3@abc.com\tMobile\t(212) 555-1003\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname4\tmname4\tlname4\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail4@abc.com\tMobile\t(212) 555-1004\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname5\tmname5\tlname5\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail5@abc.com\tMobile\t(212) 555-1005\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname6\tmname6\tlname6\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail6@abc.com\tMobile\t(212) 555-1006\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname7\tmname7\tlname7\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail7@abc.com\tMobile\t(212) 555-1007\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname8\tmname8\tlname8\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail8@abc.com\tMobile\t(212) 555-1008\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname9\tmname9\tlname9\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail9@abc.com\tMobile\t(212) 555-1009\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname10\tmname10\tlname10\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail10@abc.com\tMobile\t(212) 555-1010\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname11\tmname11\tlname11\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail11@abc.com\tMobile\t(212) 555-1011\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname12\tmname12\tlname12\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail12@abc.com\tMobile\t(212) 555-1012\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname13\tmname13\tlname13\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail13@abc.com\tMobile\t(212) 555-1013\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname14\tmname14\tlname14\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail14@abc.com\tMobile\t(212) 555-1014\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname15\tmname15\tlname15\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail15@abc.com\tMobile\t(212) 555-1015\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname16\tmname16\tlname16\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail16@abc.com\tMobile\t(212) 555-1016\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname17\tmname17\tlname17\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail17@abc.com\tMobile\t(212) 555-1017\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname18\tmname18\tlname18\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail18@abc.com\tMobile\t(212) 555-1018\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname19\tmname19\tlname19\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail19@abc.com\tMobile\t(212) 555-1019\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname20\tmname20\tlname20\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail20@abc.com\tMobile\t(212) 555-1020\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname21\tmname21\tlname21\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail21@abc.com\tMobile\t(212) 555-1021\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname22\tmname22\tlname22\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail22@abc.com\tMobile\t(212) 555-1022\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname23\tmname23\tlname23\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail23@abc.com\tMobile\t(212) 555-1023\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname24\tmname24\tlname24\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail24@abc.com\tMobile\t(212) 555-1024\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname25\tmname25\tlname25\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail25@abc.com\tMobile\t(212) 555-1025\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname26\tmname26\tlname26\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail26@abc.com\tMobile\t(212) 555-1026\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname27\tmname27\tlname27\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail27@abc.com\tMobile\t(212) 555-1027\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname28\tmname28\tlname28\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail28@abc.com\tMobile\t(212) 555-1028\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname29\tmname29\tlname29\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail29@abc.com\tMobile\t(212) 555-1029\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n" +
+"fname30\tmname30\tlname30\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tHome\temail30@abc.com\tMobile\t(212) 555-1030\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t.\n";
+
+    /**
+     * 2) Basic CSV-to-Object parser using tab-delimited text.
+     *    (Adjust to comma if your CSV is comma-delimited.)
+     *
+     * @param {string} csvText - the raw CSV string.
+     * @return {Array} Array of objects with keys from the header row.
+     */
+    function parseCSVToJSON(csvText) {
+      var lines = csvText.split("\n");
+      var result = [];
+
+      // Trim each line just in case
+      for (var x = 0; x < lines.length; x++) {
+        lines[x] = lines[x].trim();
+      }
+
+      // The first line is the header row
+      var headers = lines[0].split("\t");
+
+      // Process data lines
+      for (var i = 1; i < lines.length; i++) {
+        if (!lines[i]) {
+          continue; // skip empty lines
+        }
+        var row = lines[i].split("\t");
+        var obj = {};
+        for (var j = 0; j < headers.length; j++) {
+          obj[headers[j]] = row[j] || "";
+        }
+        result.push(obj);
+      }
+      return result;
+    }
+
+    /**
+     * 3) Renders the table rows with selected columns from the contacts array.
+     * 
+     * @param {Array} contacts - array of contact objects from the CSV.
+     */
+    function renderTable(contacts) {
+      var tableBody = document.getElementById("contactsTableBody");
+      tableBody.innerHTML = ""; // Clear current rows
+
+      for (var i = 0; i < contacts.length; i++) {
+        var c = contacts[i];
+
+        // Create a table row
+        var tr = document.createElement("tr");
+
+        // The columns we want to show in the main table
+        var firstName = c["First Name"] || "";
+        var lastName = c["Last Name"] || "";
+        var email = c["E-mail 1 - Value"] || "";
+        var phone1 = c["Phone 1 - Value"] || "";
+        var phone2 = c["Phone 2 - Value"] || "";
+        var phone3 = c["Phone 3 - Value"] || "";
+
+        // Insert table cells
+        addCell(tr, firstName);
+        addCell(tr, lastName);
+        addCell(tr, email);
+        addCell(tr, phone1);
+        addCell(tr, phone2);
+        addCell(tr, phone3);
+
+        // Add an event listener for row click
+        tr.onclick = (function(contactIndex) {
+          return function() {
+            showContactForm(contacts[contactIndex]);
+          };
+        })(i);
+
+        tableBody.appendChild(tr);
+      }
+    }
+
+    /**
+     * Utility to add a table cell to a row.
+     */
+    function addCell(tr, text) {
+      var td = document.createElement("td");
+      td.textContent = text;
+      tr.appendChild(td);
+    }
+
+    /**
+     * 4) Displays a form below the table with some details about the selected contact.
+     */
+    function showContactForm(contact) {
+      var container = document.getElementById("selectedContact");
+      // Clear existing content
+      container.innerHTML = "";
+
+      // Build a simple form
+      var form = document.createElement("form");
+      form.className = "bg-light text-dark p-3 rounded";
+
+      // For brevity, let's just display a few key fields
+      form.appendChild(createFormGroup("First Name", contact["First Name"]));
+      form.appendChild(createFormGroup("Middle Name", contact["Middle Name"]));
+      form.appendChild(createFormGroup("Last Name", contact["Last Name"]));
+      form.appendChild(createFormGroup("E-mail 1", contact["E-mail 1 - Value"]));
+      form.appendChild(createFormGroup("Phone 1", contact["Phone 1 - Value"]));
+      form.appendChild(createFormGroup("Phone 2", contact["Phone 2 - Value"]));
+      form.appendChild(createFormGroup("Phone 3", contact["Phone 3 - Value"]));
+      form.appendChild(createFormGroup("Address", contact["Address 1 - Formatted"]));
+
+      // Insert form into container
+      container.appendChild(form);
+    }
+
+    /**
+     * Creates a Bootstrap form group (label + input).
+     */
+    function createFormGroup(labelText, value) {
+      var div = document.createElement("div");
+      div.className = "mb-3";
+
+      var label = document.createElement("label");
+      label.className = "form-label";
+      label.textContent = labelText;
+
+      var input = document.createElement("input");
+      input.type = "text";
+      input.className = "form-control";
+      input.value = value || "";
+
+      div.appendChild(label);
+      div.appendChild(input);
+
+      return div;
+    }
+
+    /**
+     * 5) On page load, parse the sample CSV data and render the table.
+     */
+    window.onload = function() {
+      var contacts = parseCSVToJSON(sampleCSVData);
+      renderTable(contacts);
+    };
+
+    
+  </script>
+    <!-- Script to load the navbar partial -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        fetch('navbar1.html')
+          .then(response => response.text())
+          .then(navbarHTML => {
+            document.getElementById('navbar-container').innerHTML = navbarHTML;
+          })
+          .catch(error => console.error('Error loading navbar:', error));
+      });
+    </script>
 </body>
 </html>
+
+
+
