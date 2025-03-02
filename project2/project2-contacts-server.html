@@ -26,7 +26,7 @@
   <!-- Script to load the navbar partial -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      fetch('/partials/navbar1.html')
+      fetch('navbar1.html')
         .then(response => response.text())
         .then(navbarHTML => {
           document.getElementById('navbar-container').innerHTML = navbarHTML;
