@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="Stocks Grid" />
+  <meta name="author" content="phillipjsweeney@gmail.com" />
+  <title>Stocks Grid - Bootstrap 5.3 Dark</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- jQuery (for convenience; used in some places) -->
+  <script
+    src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    defer
+  ></script>
+
+  <!-- Tabulator CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/tabulator-tables@5.5.0/dist/css/tabulator.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- jSpreadsheet / jExcel CSS (If you use it) -->
+  <link rel="stylesheet" href="css/jspreadsheet.css" />
+
+  <!-- Tabulator JS -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/tabulator-tables@5.5.0/dist/js/tabulator.min.js"
+    defer
+  ></script>
+
+  <!-- jExcel / jSpreadsheet JS (If you use it) -->
+  <script src="js/jexcel.js" defer></script>
+
+  <!-- JSuites (dependency for jExcel 4) -->
+  <script src="https://jsuites.net/v4/jsuites.js" defer></script>
+
+  <!-- SheetJS for XLSX downloads -->
+  <script
+    type="text/javascript"
+    src="https://oss.sheetjs.com/sheetjs/xlsx.full.min.js"
+    defer
+  ></script>
+
+  <style>
+    body {
+      background-color: #121212;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .table-condensed {
+      font-size: 10px;
+      background-color: #040505;
+      color: white;
+    }
+
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+
+    a.anchor {
+      display: block;
+      position: relative;
+      top: -80px;
+      visibility: hidden;
+    }
+
+    /* Tree menu (if needed) */
+    #myUL {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      font-family: Helvetica;
+      font-size: large;
+      color: #474646;
+    }
+
+    .caret {
+      cursor: pointer;
+      user-select: none;
+      font-family: Helvetica;
+      font-size: large;
+      color: #474646;
+    }
+
+    .caret::before {
+      content: "▶";
+      color: #474646;
+      display: inline-block;
+      margin-right: 6px;
+    }
+
+    .caret-down::before {
+      transform: rotate(90deg);
+    }
+
+    .nested {
+      display: none;
+      list-style-type: none;
+      font-family: Helvetica;
+      font-size: large;
+      color: #474646;
+    }
+
+    .active {
+      display: block;
+    }
+
+    /* Adjust table container for height */
+    #table {
+      height: 500px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAVBAR (If you want a custom navbar, replace this placeholder) -->
+  <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">My Navbar</a>
+    </div>
+  </nav> -->
+
+  <div class="container-fluid mt-3">
+    <div class="row">
+      <!-- SIDEBAR (Optional) -->
+      <div
+        class="col-md-2 d-none d-md-block"
+        style="height: 500px; background-color: #16181b"
+      >
+        <!-- <p>Sidebar placeholder</p> -->
+      </div>
+
+      <!-- MAIN CONTENT -->
+      <div class="col-md-9" style="background-color: #16181b">
+        <a class="anchor" id="stocks"></a>
+        <h2 class="font-weight-bold mt-3 text-white">
+          Stocks <img src="img/financegoog2.png" alt="Google Finance" />
+        </h2>
+
+        <table class="mb-2">
+          <tr>
+            <td class="text-white">SYMBOLS &nbsp;</td>
+            <td>
+              <input
+                type="text"
+                id="symbolsVal"
+                value="AMD, GOOG, MSFT, F, BRK.B, TSLA, F, NVDA, TMO, BMY, FSLR"
+                style="width: 300px"
+              />
+            </td>
+            <td>
+              <button
+                class="btn btn-sm btn-outline-light ms-2"
+                onclick="setSymbols()"
+              >
+                Submit
+              </button>
+            </td>
+            <td class="text-white ms-3">RUSSELL 1000</td>
+          </tr>
+        </table>
+
+        <!-- Table container -->
+        <div id="table"></div>
+
+        <!-- Search inputs -->
+        <div class="mb-3">
+          <label for="searchVal" class="form-label"
+            ><span style="color: white; font-style: normal;">SYMBOLS</span></label
+          >
+          <input
+            type="text"
+            id="searchVal"
+            placeholder="SYM1,SYM2,..."
+            style="width: 300px"
+          />
+          <button
+            id="search"
+            class="btn btn-sm btn-outline-light ms-2"
+            onclick="setSearchFilter()"
+          >
+            Search
+          </button>
+          <button
+            id="clearsearch"
+            class="btn btn-sm btn-outline-light ms-2"
+            onclick="clearSearch()"
+          >
+            Clear
+          </button>
+        </div>
+
+        <!-- Download buttons -->
+        <button id="download-json" class="btn btn-sm btn-secondary">Download JSON</button>
+        <button id="download-xlsx" class="btn btn-sm btn-secondary">Download XLSX</button>
+        <button id="download-csv" class="btn btn-sm btn-secondary">Download CSV</button>
+
+        <!-- Optional extra space at the bottom -->
+        <div style="height: 200px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER (Optional) -->
+  <!-- <footer class="container-fluid bg-dark text-white mt-3 p-3">
+    <p class="text-center mb-0">Footer placeholder</p>
+  </footer> -->
+
+  <!-- Bootstrap JS (Popper included) -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    defer
+  ></script>
+
+  <!-- Font Awesome (optional) -->
+  <script
+    src="https://use.fontawesome.com/releases/v5.15.3/js/all.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+
+  <script>
+    let table;
+
+    // Helper function for link
+    function link_fin1(row) {
+      return row.getData().GOOGLEFINANCE;
+    }
+
+    window.addEventListener("DOMContentLoaded", function () {
+      // CSV from Google Sheets
+      const csvURL =
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ_WpG7c_PXybqmJWBRWsB9hFVIqjUew_Ng4MX8hRcdzAm7tNHc8D6i2PfAHof1af3-avCp16YPC1st/pub?output=csv";
+      let csvData;
+
+      // Synchronous request (blocking) to fetch CSV
+      const request2 = new XMLHttpRequest();
+      request2.open("GET", csvURL, false); // false => synchronous
+      request2.send(null);
+
+      if (request2.status === 200) {
+        // Remove header line from CSV
+        let lines = request2.responseText.split("\n");
+        lines.splice(0, 1);
+        csvData = lines.join("\n");
+      }
+
+      table = new Tabulator("#table", {
+        height: 500,
+        data: csvData,
+        importFormat: "csv",
+        selectable: 1,
+        index: "SYMBOL",
+        columns: [
+          {
+            title: "SYMBOL",
+            field: "SYMBOL",
+            formatter: "link",
+            width: 100,
+            formatterParams: {
+              url: link_fin1,
+              target: "_blank",
+            },
+          },
+          { title: "NAME", field: "NAME", width: 120 },
+          { title: "PRICE", field: "PRICE", width: 80 },
+          {
+            title: "CHANGE",
+            field: "CHANGE",
+            width: 100,
+            formatter: function (cell) {
+              const value = cell.getValue();
+              let color = value >= 0 ? "green" : "red";
+              return `<span style="color:${color};">${value}</span>`;
+            },
+          },
+          {
+            title: "CHANGE%",
+            field: "CHANGE%",
+            width: 100,
+            formatter: function (cell) {
+              const value = cell.getValue();
+              let color = value >= 0 ? "green" : "red";
+              return `<span style="color:${color};">${value}</span>`;
+            },
+          },
+          { title: "OPEN", field: "OPEN", width: 100 },
+          { title: "DAY-HIGH", field: "DAY-HIGH", width: 100 },
+          { title: "DAY-LOW", field: "DAY-LOW", width: 100 },
+          { title: "VOLUME", field: "VOLUME", width: 100 },
+          { title: "PE", field: "PE", width: 60 },
+          { title: "EPS", field: "EPS", width: 60 },
+          { title: "52HIGH", field: "HIGH52", width: 80 },
+          { title: "52LOW", field: "LOW52", width: 80 },
+          { title: "MARKETCAP", field: "MARKETCAP", width: 80 },
+          { title: "LASTTRADE", field: "LASTTRADE", width: 60 },
+          {
+            title: "YAHOOFINANCE",
+            field: "YAHOOFINANCE",
+            formatter: "link",
+            width: 120,
+            formatterParams: {
+              target: "_blank",
+            },
+          },
+          {
+            title: "GOOGLEFINANCE",
+            field: "GOOGLEFINANCE",
+            formatter: "link",
+            width: 120,
+            formatterParams: {
+              target: "_blank",
+            },
+          },
+          { title: "EXCHANGE", field: "EXCHANGE", width: 100 },
+        ],
+      });
+    });
+
+    function setSymbols() {
+      table.clearFilter();
+      const symbolsInput = document
+        .getElementById("symbolsVal")
+        .value.toUpperCase()
+        .split(",");
+      table.setFilter("SYMBOL", "in", symbolsInput.map((s) => s.trim()));
+    }
+
+    function setSearchFilter() {
+      table.clearFilter();
+      const symbolsInput = document
+        .getElementById("searchVal")
+        .value.toUpperCase()
+        .split(",");
+      table.setFilter("SYMBOL", "in", symbolsInput.map((s) => s.trim()));
+    }
+
+    function clearSearch() {
+      document.getElementById("searchVal").value = "";
+      table.clearFilter();
+    }
+
+    // Download events
+    document.addEventListener("DOMContentLoaded", function () {
+      document
+        .getElementById("download-json")
+        .addEventListener("click", function () {
+          table.download("json", "stocks.json");
+        });
+
+      document
+        .getElementById("download-xlsx")
+        .addEventListener("click", function () {
+          table.download("xlsx", "stocks.xlsx", { sheetName: "Sheet1" });
+        });
+
+      document
+        .getElementById("download-csv")
+        .addEventListener("click", function () {
+          table.download("csv", "stocks.csv", { delimiter: ",", bom: true });
+        });
+
+      // Enter key triggers search
+      const searchVal = document.getElementById("searchVal");
+      searchVal.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+          document.getElementById("search").click();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

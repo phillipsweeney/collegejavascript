@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+  <title>News Ticker - Dark Bootstrap</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- jSpreadsheet / jExcel CSS (if needed) -->
+  <link rel="stylesheet" href="css/jspreadsheet.css" />
+
+  <!-- jExcel, jSuites (optional) -->
+  <script
+    src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    defer
+  ></script>
+  <script src="js/jexcel.js" defer></script>
+  <script src="https://jsuites.net/v4/jsuites.js" defer></script>
+
+  <style>
+    body {
+      background-color: #121212;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    .table-condensed {
+      font-size: 10px;
+      background-color: #040505;
+      color: white;
+    }
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      user-select: none;
+    }
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+    a.anchor {
+      display: block;
+      position: relative;
+      top: -80px;
+      visibility: hidden;
+    }
+
+    /* Scrollable container for news items */
+    .news-container {
+      overflow-y: auto;
+      height: 500px;
+      width: 100%;
+      border: 1px solid #444;
+      padding: 5px;
+      margin-bottom: 20px;
+    }
+
+    /* We'll replicate marquee with a vertical scrolling effect */
+    .marquee-wrapper {
+      position: relative;
+      height: 500px; /* area for scrolling */
+      border: 1px solid #444;
+      overflow: hidden;
+      padding: 5px;
+    }
+    .marquee-content {
+      position: absolute;
+      width: 100%;
+      animation: scroll-up linear infinite;
+    }
+    /* Adjust speed as needed (e.g., 40s) */
+    @keyframes scroll-up {
+      0% {
+        top: 100%;
+      }
+      100% {
+        top: -100%;
+      }
+    }
+
+    /* Table for news items */
+    table.table-news {
+      width: 100%;
+      color: #ffffff;
+      font-size: 0.9rem;
+    }
+    table.table-news tr td {
+      vertical-align: top;
+      padding: 4px;
+    }
+    table.table-news tr td a {
+      color: #0d6efd;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAVBAR (optional) -->
+  <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">My Navbar</a>
+    </div>
+  </nav> -->
+
+  <div class="container-fluid mt-3">
+    <div class="row">
+      <!-- SIDEBAR (optional) -->
+      <div
+        class="col-md-2 d-none d-md-block"
+        style="height: 500px; background-color: #16181b;"
+      >
+        <!-- <p>Sidebar placeholder</p> -->
+      </div>
+
+      <!-- MAIN CONTENT -->
+      <div class="col-md-9">
+        <a class="anchor" id="news"></a>
+        <h2 class="font-weight-bold mt-3">
+          NEWS
+          <img
+            src="img/cnbc-logo.gif"
+            alt="CNBC"
+            style="height:30px; margin-left:10px"
+          />
+          <img
+            src="img/googlenews.png"
+            alt="Google News"
+            style="height:30px; margin-left:10px"
+          />
+        </h2>
+
+        <!-- Search form / placeholder (if needed) -->
+        <div class="mb-3">
+          <form class="input-group" onsubmit="return false;">
+            <input
+              class="form-control"
+              type="text"
+              list="news_l"
+              name="newssrch"
+              id="newssrch"
+              size="50"
+              placeholder="Search news..."
+            />
+            <datalist id="news_l">
+              <option>xxxxxxx</option>
+              <option>yyyyyyyyy</option>
+            </datalist>
+            <button class="btn btn-outline-light ms-2">Update</button>
+            <button
+              type="button"
+              class="btn btn-outline-light ms-2"
+              onclick="document.getElementById('newssrch').value = ''"
+            >
+              Clear
+            </button>
+          </form>
+        </div>
+
+        <!-- CNBC feed container -->
+        <div id="newsCnbc" class="news-container">
+          <!-- Filled by JS -->
+          <div>Loading CNBC feed...</div>
+        </div>
+
+        <!-- Google News feed container (animated marquee) -->
+        <div class="marquee-wrapper">
+          <div id="marqueeContent" class="marquee-content">
+            Loading Google News feed...
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER (optional) -->
+  <!-- <footer class="container-fluid bg-dark text-white mt-3 p-3">
+    <p class="text-center mb-0">Footer placeholder</p>
+  </footer> -->
+
+  <!-- Bootstrap JS (Popper included) -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    defer
+  ></script>
+
+  <!-- Font Awesome (optional) -->
+  <script
+    src="https://use.fontawesome.com/releases/v5.15.3/js/all.js"
+    crossorigin="anonymous"
+    defer
+  ></script>
+
+  <script>
+    // ---------------------------------------------
+    // Utility function to build HTML table rows from RSS items
+    function buildNewsTableRSS(rssItems) {
+      let html = '<table class="table-news">';
+      rssItems.forEach((item) => {
+        const pubDate = item.pubDate || "";
+        const title = item.title || "";
+        const link = item.link || "";
+        const desc = item.description || "";
+
+        html += `
+          <tr>
+            <td width="20%">${pubDate}</td>
+            <td>
+              <a href="${link}" target="_blank">
+                ${title.replace(/\?/g, "")}
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="2">
+              ${desc.replace(/\?/g, "")}
+            </td>
+          </tr>
+        `;
+      });
+      html += "</table>";
+      return html;
+    }
+
+    // Fetch CNBC feed via rss2json proxy (to avoid CORS)
+    //   feed url: https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100003114
+    //   We'll pass it to https://api.rss2json.com/v1/api.json?rss_url=...
+    function loadCnbcFeed() {
+      const cnbcRssUrl = encodeURIComponent(
+        "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100003114"
+      );
+      const proxyUrl = "https://api.rss2json.com/v1/api.json?rss_url=" + cnbcRssUrl;
+
+      fetch(proxyUrl)
+        .then((response) => response.json())
+        .then((data) => {
+          // data.items is an array of feed items
+          if (data && data.items) {
+            const tableHtml = buildNewsTableRSS(data.items);
+            document.getElementById("newsCnbc").innerHTML = tableHtml;
+          } else {
+            document.getElementById("newsCnbc").innerHTML =
+              "Error: invalid CNBC feed data.";
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          document.getElementById("newsCnbc").innerHTML =
+            "Error loading CNBC feed (RSS2JSON or CORS issue?).";
+        });
+    }
+
+    // Fetch Google News feed via rss2json proxy
+    function loadGoogleFeed() {
+      // Original feed:
+      //   https://news.google.com/rss?hl=en-US&gl=en-USA&ceid=en-US:en
+      // For best results, specify entire URL
+      const googleRss = encodeURIComponent(
+        "https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en"
+      );
+      const proxyUrl = "https://api.rss2json.com/v1/api.json?rss_url=" + googleRss;
+
+      fetch(proxyUrl)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data && data.items) {
+            const tableHtml = buildNewsTableRSS(data.items);
+            document.getElementById("marqueeContent").innerHTML = tableHtml;
+
+            // After content loads, set the marquee animation duration
+            // based on the total height of the content
+            const marqueeContent = document.getElementById("marqueeContent");
+            const contentHeight = marqueeContent.scrollHeight;
+            // e.g., 1 second per 50px, adjust as needed:
+            const duration = Math.max(contentHeight / 50, 10); // min 10s
+            marqueeContent.style.animationDuration = duration + "s";
+          } else {
+            document.getElementById("marqueeContent").innerHTML =
+              "Error: invalid Google feed data.";
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+          document.getElementById("marqueeContent").innerHTML =
+            "Error loading Google News feed (RSS2JSON or CORS issue?).";
+        });
+    }
+
+    // On DOM load, fetch the feeds
+    document.addEventListener("DOMContentLoaded", function () {
+      loadCnbcFeed();
+      loadGoogleFeed();
+    });
+  </script>
+</body>
+</html>
