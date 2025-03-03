@@ -1,6 +1,6 @@
 Project 2 - Server Data Applications- 
 
-Setup Node.js - Hellow World App:  Nodejs-server-helloworld1.pdf
+Setup Node.js - Hello World App:  <a href="https://github.com/phillipsweeney/collegejavascript/blob/39d1918ffe30193f83192b58b2a59dca92c3020f/project2/Nodejs-server-helloworld1.pdf">Nodejs-server-helloworld1.pdf</a>
 
 contacts-server - Load contacts from Server.  Use static single navbar insert from server file.  load contacts from server.  This means contacts can be loaded from the cloud now. [Note: look at the navbar orf the browser, to run on the server you point the browser to the local server url, and not a local file.) Load contacts from google spreadsheet.
 
