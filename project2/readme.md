@@ -6,7 +6,7 @@ contacts-server - Load contacts from Server.  Use static single navbar insert fr
 
 ![image](https://github.com/user-attachments/assets/4141b170-e5f6-4031-b0d3-2d04f7f633bc)
 
-stocksdata - use google sheets to load 10 stocks.  Use grid view on the gui. 
+stocksdata - use google sheets to load Russel 1000 stocks.  Use grid view on the gui. 
 
 ![image](https://github.com/user-attachments/assets/bf63c645-d35a-4351-8af4-632dc20682c0)
 
