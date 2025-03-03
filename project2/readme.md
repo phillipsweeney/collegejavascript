@@ -6,8 +6,10 @@ contacts-server - Load contacts from Server.  Use static single navbar insert fr
 
 stocksdata - use google sheets to load 10 stocks.  Use grid view on the gui. 
 
-[COMING SOON]
+![image](https://github.com/user-attachments/assets/bf63c645-d35a-4351-8af4-632dc20682c0)
+
 
 newsdata - Google news ticker data loaded from screen scraper.
 
-[COMING SOON]
+![image](https://github.com/user-attachments/assets/02b3307d-9f07-48f2-a2e4-5cce5aef94fa)
+
