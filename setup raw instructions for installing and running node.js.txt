@@ -1,0 +1,219 @@
+
+
+*******************************
+
+Instructions to setup and run node.js/express for first time.
+These instructions allow setup of a start index.html page, and can be updated and deployed to google cloud in a single step.
+This is the framework for development if full server apps on Google cloud.
+
+STEPS:
+
+1. 
+Download/Install Node.js/NPM, VSCode:
+https://nodejs.org/en/download
+https://code.visualstudio.com/download
+
+
+2. 
+From a command prompt, Change to your project folder
+
+Type:
+
+npm init -y                 // This sets up the folder with new node js files/settings - done once only per project....
+
+npm install express        // This sets up express - done once only
+
+
+
+3. 
+create an index.html file in the /projectfolder/public folder.
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8" />
+ <title>MyCompany.com</title>
+ <!-- Load Bootstrap CSS (dark nav) -->
+ <link
+ rel="stylesheet"
+
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+ />
+</head>
+<body class="bg-dark text-white">
+
+ <div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+ <div class="container-fluid">
+ <a class="navbar-brand" href="#">MyCompany.com</a>
+ <button
+ class="navbar-toggler"
+ type="button"
+ data-bs-toggle="collapse"
+ data-bs-target="#navbarSupportedContent"
+ aria-controls="navbarSupportedContent"
+ aria-expanded="false"
+ aria-label="Toggle navigation"
+ >
+ <span class="navbar-toggler-icon"></span>
+ </button>
+ <div class="collapse navbar-collapse" id="navbarSupportedContent">
+ <ul class="navbar-nav me-auto">
+ <li class="nav-item">
+ <a class="nav-link" href="#">Home</a>
+ </li>
+ <!-- Add more nav items as needed -->
+ </ul>
+ </div>
+ </div>
+</nav>
+ </div>
+ <!-- Main content -->
+ <div class="container mt-4">
+ <h1>Hello, World!</h1>
+ <p>This is the main content of the page.</p>
+ </div>
+ <!-- Bootstrap JS + dependencies -->
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+4. 
+
+create an server.js file in the /projectfolder/ folder:
+
+const express = require('express');
+const path = require('path');
+const app = express();
+// Serve all files in the "public" folder
+app.use(express.static(path.join(__dirname, 'public')));
+// Define a port (default to 3000)
+const PORT = process.env.PORT || 3000;
+// Start the server
+app.listen(PORT, () => {
+ console.log(`Server is running at http://localhost:${PORT}`);
+});
+
+
+
+
+5. 
+
+***
+Run the server.js, and Run your App: (Done whenever you want to run web server.)
+***
+
+a. Start Node.js server:
+
+-- Type from command prompt, where server.js file is located, in the /projectfolder/ .
+type:  node server.js
+
+
+You should see:  "Server is running at http://localhost:3000 " from the command prompt window.  Leave that Window alone and do not close it.  That is your server running now and listening on port 3000!
+
+Open Google Chrome (or any browser).
+
+b. Go to: http://localhost:3000 in the broswer URL.  --Server will be serving your index.html file!  Do not close thsi terminal window.  This is your server listening for requests on port 3000.
+
+
+
+
+Now you have a node.js server ready to edit, and deploy to google cloud whenever you want to publish.  Deploying to Google Cloud is also one command only () update after initial setup.)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+**********************************************************************************************************
+
+
+
+
+<!-- ********************OPTIONAL create navbar.html file, and load for mere so change once for all pages!!! --> here-- 
+
+1. 
+ <!-- Navbar will be injected here 
+ <div id="navbar-container"></div>
+
+
+2. 
+
+<script>
+// Script to load the navbar partial 
+ document.addEventListener('DOMContentLoaded', () => {
+ fetch('navbar1.html')
+ .then(response => response.text())
+ .then(navbarHTML => {
+ document.getElementById('navbar-container').innerHTML = navbarHTML;
+ })
+ .catch(error => console.error('Error loading navbar:', error));
+ });
+ </script>
+
+3. create navbar.html file
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+ <div class="container-fluid">
+ <a class="navbar-brand" href="#">MyCompany.com</a>
+ <button
+ class="navbar-toggler"
+ type="button"
+ data-bs-toggle="collapse"
+ data-bs-target="#navbarSupportedContent"
+ aria-controls="navbarSupportedContent"
+ aria-expanded="false"
+ aria-label="Toggle navigation"
+ >
+ <span class="navbar-toggler-icon"></span>
+ </button>
+ <div class="collapse navbar-collapse" id="navbarSupportedContent">
+ <ul class="navbar-nav me-auto">
+ <li class="nav-item">
+ <a class="nav-link" href="#">Home</a>
+ </li>
+
+ </ul>
+ </div>
+ </div>
+</nav>
+ ************************************************
+
+ https://github.com/phillipsweeney/collegejavascript/blob/main/project1/project1-setup-Install%20vscode%201.pdf
+ https://github.com/phillipsweeney/collegejavascript/blob/main/project1/project1-setup-Install%20nodejs%201.pdf
+ 
+-->
+
+
+
+]
